@@ -11,26 +11,16 @@ struct employee {
 
 struct employee *emp=NULL;
 int count =0;
-int found=0;
-int employee_count;
-int id_for_update;
-int id_for_delete;
-int serch_by_id;
 void add_employee() {
-
-    found =0;
     emp = realloc(emp,(count +1)* sizeof(struct employee));
     printf("----RECORD EMPLOYEE #%d----\n",count+1);
     printf("Enter Employee Id: ");
     scanf("%d",&emp[count].id);
     for(int i=0;i<count;i++){
         if(emp[i].id == emp[count].id){
-            found=1;
+           printf("This ID Already Use.\n");
+           return;
         }
-    }
-    if(found==1){
-       printf("\nThis ID Already Use.\n");
-        return;
     }
     printf("Enter Employee Name: ");
     scanf("%s",&emp[count].name);
@@ -47,39 +37,16 @@ void add_employee() {
 }
 
 void add_multiple_employee() {
-
-    found =0;
+    int employee_count;
     printf("enter employee count:");
     scanf("%d",&employee_count);
-    emp = realloc(emp, (count +employee_count) *sizeof(struct employee));
-    for (int i=0;i<employee_count;i++){
-        printf("----RECORD EMPLOYEE #%d----\n",count+1);
-        printf("\nEnter Employee Id: ");
-        scanf("%d",&emp[count].id);
-        for(int i=0;i<count;i++){
-        if(emp[i].id == emp[count].id){
-            found=1;
-        }
-    }
-    if(found==1){
-        printf("This ID Already Use.\n");
-        break;
-    }
-        printf("Enter Employee Name: ");
-        scanf("%s",&emp[count].name);
-        printf("Enter Employee salary: ");
-        scanf("%f",&emp[count].salary);
-        printf("Enter Employee location: ");
-        scanf("%s",&emp[count].location);
-        printf("\n");
-        printf("----DONE RECORD----\n");
-        printf("\n");
-        count++;
+    for(int i=0;i<employee_count;i++){
+            add_employee();
     }
 }
 
 void update_employee() {
-    found=0;
+    int id_for_update;
     if(count == 0){
        printf("----NO EMPLOYEE RECORD---\n");
        return;
@@ -94,16 +61,15 @@ void update_employee() {
             scanf("%f",&emp[i].salary);
             printf("Enter New Location: ");
             scanf("%s",&emp[i].location);
-            found =1;
+            printf("Done update\n");
+            return;
             }
        }
-       if(found == 0){
              printf("Employee not found!!!\n");
-       }
 }
 
 void delete_employee() {
-    found=0;
+    int id_for_delete;
     if(count == 0){
        printf("----NO EMPLOYEE RECORD---\n");
        return;
@@ -116,17 +82,15 @@ void delete_employee() {
                      emp[j]=emp[j+1];
                 }
                 count--;
-                found=1;
                 printf("Done Delete\n");
+                return;
             }
         }
-        if(found == 0) {
             printf("No found Employee\n");
-        }
 }
 
 void serch_employee() {
-    found=0;
+    int serch_by_id;
     if(count == 0){
        printf("----NO EMPLOYEE RECORD---\n");
        return;
@@ -139,13 +103,10 @@ void serch_employee() {
             printf("NAME: %s\n",emp[i].name);
             printf("SALARY: %3.2f\n",emp[i].salary);
             printf("LOCATION: %s\n",emp[i].location);
-            found =1;
+            return;
         }
     }
-    if(found == 0){
          printf("employee not found!!!\n");
-    }
-    return;
 }
 
 void get_all() {
@@ -217,6 +178,4 @@ void minue() {
 int main() {
 
     minue();
-
-
 }
